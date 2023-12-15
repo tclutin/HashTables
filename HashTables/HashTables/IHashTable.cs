@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace HashTables.HashTables
 {
-    public interface IHashTable
+    public interface IHashTable<T, V>
     {
+        void Add(T key, V value);
+        void Remove(T key, V value);
+        V Get(T key);
     }
 }
