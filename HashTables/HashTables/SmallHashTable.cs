@@ -5,8 +5,9 @@ namespace HashTables.HashTables
 {
     public class SmallHashTable<T, V>: IHashTable<T, V>
     {
-        public readonly int capacity = 1000;
+        public int Count = 0;
 
+        public readonly int capacity = 1000;
         public readonly List<Entity<T, V>>[] buckets;
 
         public SmallHashTable()
@@ -21,7 +22,7 @@ namespace HashTables.HashTables
 
         public void Add(T key, V value)
         {
-            int index = GetBaseHash(key);
+            int index = 1;
             var entity = new Entity<T, V>()
             {
                 Key = key,
@@ -32,30 +33,35 @@ namespace HashTables.HashTables
             {
                 buckets[index] = new List<Entity<T, V>>();
                 buckets[index].Add(entity);
+                Count++;
+                Console.WriteLine($"Добавился элемент с хешом {index} {entity.Key} - {entity.Value}");
             }
             else
             {
                 var current = buckets[index];
-                foreach (var item in current)
+                var bucket = current.Find(bucket => bucket.Key.Equals(key));
+                if (bucket != null)
                 {
-                    //todo
+                    bucket.Value = value;
+                    Console.WriteLine($"Элемент с ключом {key} обновлен: {bucket.Value}");
+                    return;
                 }
+
+                Console.WriteLine($"Произошла коллизия с хешом {index} {entity.Key} - {entity.Value}");
+                current.Add(entity);
+                Count++;
             }
 
         }
 
         public V Get(T key)
         {
-            int index = GetBaseHash(key);
-            if (buckets[index] != null)
+            int index = 1;
+
+            Entity<T, V> bucket = buckets[index].Find(bucket => bucket.Key.Equals(key));
+            if (bucket != null)
             {
-                foreach (var item in buckets[index])
-                {
-                    if (item.Key.Equals(key))
-                    {
-                        return item.Value;
-                    }
-                }
+                return bucket.Value;
             }
             return default(V);
         }

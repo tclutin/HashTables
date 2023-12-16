@@ -8,20 +8,61 @@ namespace HashTables
         {
             Console.WriteLine("Hello, World!");
 
-            SmallHashTable<string, string> table = new SmallHashTable<string, string>();
+            QSmallHashTable<string, string> table = new QSmallHashTable<string, string>();
             table.Add("a", "b");
             table.Add("c", "d");
             table.Add("d", "e");
-                
+
             table.Add("e", "f");
             table.Add("f", "g");
             table.Add("f", "g");
-            table.Add("f", "g");
-            table.Add("f", "g");
-            table.Add("f", "g");
+            table.Add("f", "2");
 
-            var x = table.Get("f");
-            Console.WriteLine($"{x}");
+            table.Add("cq", "2132132132132133");
+            //foreach (var item in table.buckets)
+            //{
+            //    if (item != null)
+            //    {
+            //        foreach (var item2 in item)
+            //        {
+            //            Console.WriteLine($"{item2.Key} {item2.Value}");
+            //        }
+            //    }
+            //}
+            //Console.WriteLine(table.Count);
+            //table.Remove("cq");
+            //Console.WriteLine(table.Get("cq"));
+            foreach (var item in table.buckets)
+            {
+                if (item != null)
+                {
+                    var x = item;
+                    while (x != null)
+                    {
+                        Console.WriteLine($"{x.Key} {x.Value}");
+                        x = x.Next;
+                    }
+                }
+            }
+            Console.WriteLine(table.Count);
+            table.Remove("cq");
+            table.Remove("a");
+            Console.WriteLine(table.Get("cq"));
+            foreach (var item in table.buckets)
+            {
+                if (item != null)
+                {
+                    var x = item;
+                    while (x != null)
+                    {
+                        Console.WriteLine($"{x.Key} {x.Value}");
+                        x = x.Next;
+                    }
+                }
+            }
+            Console.WriteLine(table.Count);
+            //var x = table.Get("d");
+            //Console.WriteLine($"{x}");
             //foreach (var item in table.buckets)
             //{
             //    if (item != null)
