@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HashTables.HashTables
+namespace HashTables.Common
 {
     public class Node<T>
     {
@@ -109,7 +109,7 @@ namespace HashTables.HashTables
                 }
                 current = current.Next;
             }
-            return default(T);
+            return default;
         }
 
         public IEnumerator<T> GetEnumerator()

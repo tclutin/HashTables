@@ -34,7 +34,6 @@ namespace HashTables
             table.Remove("cq");
             table.Remove("f");
             table.Remove("c");
-
             foreach (var item in table.buckets)
             {
                 if (item != null)

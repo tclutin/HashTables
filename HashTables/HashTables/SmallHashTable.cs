@@ -5,7 +5,7 @@ namespace HashTables.HashTables
 {
     public class SmallHashTable<T, V> : IHashTable<T, V>
     {
-        public int Count = 0;
+        public int Count { get; } = 0;
 
         public readonly int capacity = 1000;
         public readonly DoublyLinkedList<Entity<T, V>>[] buckets;
@@ -17,12 +17,22 @@ namespace HashTables.HashTables
 
         public int GetBaseHash(T key)
         {
-            return Math.Abs(key.GetHashCode() % 1000);
+            if (typeof(T) == typeof(string))
+            {
+                
+            }
+
+            if (typeof(T) == typeof(int))
+            {
+                return key % capacity;
+            }
+
+            return Math.Abs(key.GetHashCode() % capacity);
         }
 
         public void Add(T key, V value)
         {
-            int index = 1;
+            int index = GetBaseHash(key);
             var entity = new Entity<T, V>()
             {
                 Key = key,
@@ -46,7 +56,7 @@ namespace HashTables.HashTables
                     if (element.Data.Key.Equals(key))
                     {
                         element.Data.Value = entity.Value;
-                        Console.WriteLine($"Элемент с ключом {key} обновлен: {entity.Value}");
+                        Console.WriteLine($"Элемент с ключом {key} и хешом {index} обновлен на значение {entity.Value}");
                         return;
                     }
                     element = element.Next;
@@ -60,7 +70,7 @@ namespace HashTables.HashTables
 
         public V Get(T key)
         {
-            int index = 1;
+            int index = GetBaseHash(key); ;
             var current = buckets[index];
             var element = current.head;
 
@@ -77,7 +87,7 @@ namespace HashTables.HashTables
 
         public void Remove(T key)
         {
-            int index = 1;
+            int index = GetBaseHash(key);
             var current = buckets[index];
 
             if (current != null)

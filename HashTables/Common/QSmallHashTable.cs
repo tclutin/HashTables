@@ -1,7 +1,7 @@
 ﻿using HashTables.Models;
 
 
-namespace HashTables.HashTables
+namespace HashTables.Common
 {
     public class QSmallHashTable<T, V>
     {
@@ -73,7 +73,7 @@ namespace HashTables.HashTables
                 }
                 bucket = bucket.Next;
             }
-            return default(V);
+            return default;
         }
 
         public void Remove(T key)
