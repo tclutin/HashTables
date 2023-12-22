@@ -3,7 +3,7 @@
 
 namespace HashTables.HashTables
 {
-    public class SmallHashTable<T, V>: IHashTable<T, V>
+    public class SmallHashTable<T, V>
     {
         public int Count = 0;
 
@@ -39,16 +39,20 @@ namespace HashTables.HashTables
             else
             {
                 var current = buckets[index];
-                var bucket = current.Find(bucket => bucket.Key.Equals(key));
-                if (bucket != null)
-                {
-                    bucket.Value = value;
-                    Console.WriteLine($"Элемент с ключом {key} обновлен: {bucket.Value}");
-                    return;
-                }
+                var element = current.head;
 
+                while (element != null)
+                {
+                    if (element.Data.Key.Equals(key))
+                    {
+                        element.Data.Value = entity.Value;
+                        Console.WriteLine($"Элемент с ключом {key} обновлен: {entity.Value}");
+                        return;
+                    }
+                    element = element.Next;
+                }
                 Console.WriteLine($"Произошла коллизия с хешом {index} {entity.Key} - {entity.Value}");
-                current.Add(entity);
+                current.AddLast(entity);
                 Count++;
             }
 
@@ -57,18 +61,44 @@ namespace HashTables.HashTables
         public V Get(T key)
         {
             int index = 1;
+            var current = buckets[index];
+            var element = current.head;
 
-            Entity<T, V> bucket = buckets[index].Find(bucket => bucket.Key.Equals(key));
-            if (bucket != null)
+            while (element != null)
             {
-                return bucket.Value;
+                if (element.Data.Key.Equals(key))
+                {
+                    return element.Data.Value;
+                }
+                element = element.Next;
             }
             return default(V);
         }
 
-        public void Remove(T key, V value)
+        public void Remove(T key)
         {
-            throw new NotImplementedException();
+            int index = 1;
+            var current = buckets[index];
+
+            if (current != null)
+            {
+                var element = current.head;
+
+                while (element != null)
+                {
+                    if (element.Data.Key.Equals(key))
+                    {
+                        current.Remove(element.Data);
+                        Count--;
+                        Console.WriteLine($"Элемент с ключом {key} удален.");
+                        return;
+                    }
+                    element = element.Next;
+                }
+            }
+
+            Console.WriteLine($"Элемент с ключом {key} не найден.");
+
         }
     }
 }

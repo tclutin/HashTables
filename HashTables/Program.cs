@@ -8,7 +8,7 @@ namespace HashTables
         {
             Console.WriteLine("Hello, World!");
 
-            QSmallHashTable<string, string> table = new QSmallHashTable<string, string>();
+            SmallHashTable<string, string> table = new SmallHashTable<string, string>();
             table.Add("a", "b");
             table.Add("c", "d");
             table.Add("d", "e");
@@ -19,77 +19,33 @@ namespace HashTables
             table.Add("f", "2");
 
             table.Add("cq", "2132132132132133");
-            //foreach (var item in table.buckets)
-            //{
-            //    if (item != null)
-            //    {
-            //        foreach (var item2 in item)
-            //        {
-            //            Console.WriteLine($"{item2.Key} {item2.Value}");
-            //        }
-            //    }
-            //}
-            //Console.WriteLine(table.Count);
-            //table.Remove("cq");
-            //Console.WriteLine(table.Get("cq"));
+            
             foreach (var item in table.buckets)
             {
                 if (item != null)
                 {
-                    var x = item;
-                    while (x != null)
+                    foreach (var item1 in item)
                     {
-                        Console.WriteLine($"{x.Key} {x.Value}");
-                        x = x.Next;
+                        Console.WriteLine($"{item1.Key} -- { item1.Value}");
                     }
                 }
             }
             Console.WriteLine(table.Count);
             table.Remove("cq");
-            table.Remove("a");
             table.Remove("f");
             table.Remove("c");
-            Console.WriteLine(table.Get("cq"));
+
             foreach (var item in table.buckets)
             {
                 if (item != null)
                 {
-                    var x = item;
-                    while (x != null)
+                    foreach (var item1 in item)
                     {
-                        Console.WriteLine($"{x.Key} {x.Value}");
-                        x = x.Next;
+                        Console.WriteLine($"{item1.Key} -- {item1.Value}");
                     }
                 }
             }
             Console.WriteLine(table.Count);
-            //var x = table.Get("d");
-            //Console.WriteLine($"{x}");
-            //foreach (var item in table.buckets)
-            //{
-            //    if (item != null)
-            //    {
-            //        foreach (var item1 in item)
-            //        {
-            //            Console.WriteLine($"{item1.Key}, {item1.Value}");
-
-            //        }
-            //    }
-            //}
-            DoublyLinkedList<int> q = new DoublyLinkedList<int>();
-            q.AddLast(1);
-            q.AddLast(2);
-            q.AddLast(3);
-            q.AddLast(4);
-
-            foreach (var item in q)
-            {
-                Console.WriteLine(item);
-            }
-
-            q.Remove(4);
-            var xqq = q.Get(3);
-            Console.WriteLine(xqq);
 
         }
     }

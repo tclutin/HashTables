@@ -23,8 +23,8 @@ namespace HashTables.HashTables
 
     public class DoublyLinkedList<T> : IEnumerable<T>
     {
-        private Node<T> head;
-        private Node<T> tail;
+        public Node<T> head;
+        public Node<T> tail;
 
         private int count;
 
