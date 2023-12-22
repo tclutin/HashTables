@@ -1,14 +1,17 @@
-﻿using HashTables.Models;
+﻿using HashTables.Common;
+using HashTables.Models;
 
 
 namespace HashTables.HashTables
 {
     public class SmallHashTable<T, V> : IHashTable<T, V>
     {
-        public int Count { get; } = 0;
+        public int Count = 0;
 
         public readonly int capacity = 1000;
         public readonly DoublyLinkedList<Entity<T, V>>[] buckets;
+
+        public delegate int HashFunction(T key);
 
         public SmallHashTable()
         {
@@ -17,14 +20,16 @@ namespace HashTables.HashTables
 
         public int GetBaseHash(T key)
         {
-            if (typeof(T) == typeof(string))
+            if (key == null)
             {
-                
+                return 0;
             }
 
-            if (typeof(T) == typeof(int))
+            Type valueType = typeof(T);
+
+            if (valueType == typeof(string))
             {
-                return key % capacity;
+                
             }
 
             return Math.Abs(key.GetHashCode() % capacity);
