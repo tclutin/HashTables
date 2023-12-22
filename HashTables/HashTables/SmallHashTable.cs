@@ -3,7 +3,7 @@
 
 namespace HashTables.HashTables
 {
-    public class SmallHashTable<T, V>
+    public class SmallHashTable<T, V> : IHashTable<T, V>
     {
         public int Count = 0;
 
