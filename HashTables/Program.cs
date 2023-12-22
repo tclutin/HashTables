@@ -88,12 +88,9 @@ namespace HashTables
             }
 
             q.Remove(4);
-            q.Remove(2);
-            Console.WriteLine(q.Contains(2));
-            foreach (var item in q)
-            {
-                Console.WriteLine(item);
-            }
+            var xqq = q.Get(3);
+            Console.WriteLine(xqq);
+
         }
     }
 }

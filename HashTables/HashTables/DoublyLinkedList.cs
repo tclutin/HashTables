@@ -98,6 +98,20 @@ namespace HashTables.HashTables
             return false;
         }
 
+        public T Get(T data)
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                if (current.Data.Equals(data))
+                {
+                    return current.Data;
+                }
+                current = current.Next;
+            }
+            return default(T);
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = head;
