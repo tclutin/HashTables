@@ -8,11 +8,11 @@ namespace HashTables.HashTables
         public int Count = 0;
 
         public readonly int capacity = 1000;
-        public readonly List<Entity<T, V>>[] buckets;
+        public readonly DoublyLinkedList<Entity<T, V>>[] buckets;
 
         public SmallHashTable()
         {
-            buckets = new List<Entity<T, V>>[capacity];
+            buckets = new DoublyLinkedList<Entity<T, V>>[capacity];
         }
 
         public int GetBaseHash(T key)
@@ -31,8 +31,8 @@ namespace HashTables.HashTables
 
             if (buckets[index] == null)
             {
-                buckets[index] = new List<Entity<T, V>>();
-                buckets[index].Add(entity);
+                buckets[index] = new DoublyLinkedList<Entity<T, V>>();
+                buckets[index].AddLast(entity);
                 Count++;
                 Console.WriteLine($"Добавился элемент с хешом {index} {entity.Key} - {entity.Value}");
             }
