@@ -1,21 +1,23 @@
 ﻿using HashTables.Common;
+using HashTables.HashFunctions;
 using HashTables.Models;
+using System.Drawing;
 
 
 namespace HashTables.HashTables
 {
     public class SmallHashTable<T, V> : IHashTable<T, V>
     {
-        public int Count = 0;
+        public int _count = 0;
 
-        public readonly int capacity = 1000;
-        public readonly DoublyLinkedList<Entity<T, V>>[] buckets;
+        public readonly int _capacity = 1000;
+        public readonly DoublyLinkedList<Entity<T, V>>[] _buckets;
 
-        public delegate int HashFunction(T key);
+        public IHashFunction<T> _hash;
 
         public SmallHashTable()
         {
-            buckets = new DoublyLinkedList<Entity<T, V>>[capacity];
+            _buckets = new DoublyLinkedList<Entity<T, V>>[_capacity];
         }
 
         public int GetBaseHash(T key)
@@ -27,12 +29,12 @@ namespace HashTables.HashTables
 
             Type valueType = typeof(T);
 
-            if (valueType == typeof(string))
+            if (valueType == typeof(int))
             {
-                
+                return _hash.Hash(key, _capacity);
             }
 
-            return Math.Abs(key.GetHashCode() % capacity);
+            return 0;
         }
 
         public void Add(T key, V value)
@@ -44,16 +46,16 @@ namespace HashTables.HashTables
                 Value = value,
             };
 
-            if (buckets[index] == null)
+            if (_buckets[index] == null)
             {
-                buckets[index] = new DoublyLinkedList<Entity<T, V>>();
-                buckets[index].AddLast(entity);
-                Count++;
-                Console.WriteLine($"Добавился элемент с хешом {index} {entity.Key} - {entity.Value}");
+                _buckets[index] = new DoublyLinkedList<Entity<T, V>>();
+                _buckets[index].AddLast(entity);
+                _count++;
+                Console.WriteLine($"Добавился элемент с хешом {index} и ключ-значением {entity.Key} - {entity.Value}");
             }
             else
             {
-                var current = buckets[index];
+                var current = _buckets[index];
                 var element = current.head;
 
                 while (element != null)
@@ -61,14 +63,14 @@ namespace HashTables.HashTables
                     if (element.Data.Key.Equals(key))
                     {
                         element.Data.Value = entity.Value;
-                        Console.WriteLine($"Элемент с ключом {key} и хешом {index} обновлен на значение {entity.Value}");
+                        Console.WriteLine($"Элемент с ключом {key} и хешом {index}обновлен на значение {entity.Value}");
                         return;
                     }
                     element = element.Next;
                 }
                 Console.WriteLine($"Произошла коллизия с хешом {index} {entity.Key} - {entity.Value}");
                 current.AddLast(entity);
-                Count++;
+                _count++;
             }
 
         }
@@ -76,7 +78,7 @@ namespace HashTables.HashTables
         public V Get(T key)
         {
             int index = GetBaseHash(key); ;
-            var current = buckets[index];
+            var current = _buckets[index];
             var element = current.head;
 
             while (element != null)
@@ -93,7 +95,7 @@ namespace HashTables.HashTables
         public void Remove(T key)
         {
             int index = GetBaseHash(key);
-            var current = buckets[index];
+            var current = _buckets[index];
 
             if (current != null)
             {
@@ -104,7 +106,7 @@ namespace HashTables.HashTables
                     if (element.Data.Key.Equals(key))
                     {
                         current.Remove(element.Data);
-                        Count--;
+                        _count--;
                         Console.WriteLine($"Элемент с ключом {key} удален.");
                         return;
                     }

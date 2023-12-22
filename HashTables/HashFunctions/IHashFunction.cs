@@ -8,6 +8,6 @@ namespace HashTables.HashFunctions
 {
     public interface IHashFunction<T>
     {
-        int Hash(T key);
+        int Hash(T key, int capacity);
     }
 }
