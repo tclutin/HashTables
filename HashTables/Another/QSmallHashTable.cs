@@ -79,8 +79,35 @@ namespace HashTables.HashTables
         public void Remove(T key)
         {
             int index = 1;
-            Entity<T, V> bucket = buckets[index];
-            //todo
+            Entity<T, V> current = buckets[index];
+            Entity<T, V> previous = null;
+
+            while (current != null)
+            {
+                if (current.Key.Equals(key))
+                {
+                    if (previous == null)
+                    {
+                        // Удаляемый элемент - первый в списке
+                        buckets[index] = current.Next;
+                    }
+                    else
+                    {
+                        // Удаляемый элемент не первый в списке
+                        previous.Next = current.Next;
+                    }
+
+                    Console.WriteLine($"Элемент с ключом {key} удален.");
+                    Count--;
+                    return;
+                }
+
+                previous = current;
+                current = current.Next;
+            }
+
+            Console.WriteLine($"Элемент с ключом {key} не найден.");
         }
+
     }
 }

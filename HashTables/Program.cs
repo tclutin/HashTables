@@ -47,6 +47,8 @@ namespace HashTables
             Console.WriteLine(table.Count);
             table.Remove("cq");
             table.Remove("a");
+            table.Remove("f");
+            table.Remove("c");
             Console.WriteLine(table.Get("cq"));
             foreach (var item in table.buckets)
             {
@@ -74,6 +76,24 @@ namespace HashTables
             //        }
             //    }
             //}
+            DoublyLinkedList<int> q = new DoublyLinkedList<int>();
+            q.AddLast(1);
+            q.AddLast(2);
+            q.AddLast(3);
+            q.AddLast(4);
+
+            foreach (var item in q)
+            {
+                Console.WriteLine(item);
+            }
+
+            q.Remove(4);
+            q.Remove(2);
+            Console.WriteLine(q.Contains(2));
+            foreach (var item in q)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
