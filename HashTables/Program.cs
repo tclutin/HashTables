@@ -50,12 +50,17 @@ namespace HashTables
 
             //for ints
             SmallHashTable<int, string> table = new SmallHashTable<int, string>();
-            table._hash = new DivisionMethod();
+            table._hash = new MultiplyMethod();
             table.Add(1, "1");
             table.Add(2, "2");
             table.Add(3, "3");
             table.Add(4, "4");
             table.Add(5, "5");
+
+            for (int i = 0; i < 10000; i++)
+            {
+                table.Add(i, "1");
+            }
 
             foreach (var item in table._buckets)
             {
