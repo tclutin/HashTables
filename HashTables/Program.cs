@@ -2,6 +2,8 @@
 using HashTables.HashFunctions;
 using HashTables.HashTable;
 using HashTables.HashTables;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.ExceptionServices;
 
 namespace HashTables
 {
@@ -82,7 +84,7 @@ namespace HashTables
             BigHashTable<int> table = new BigHashTable<int>();
             table.HashFunc = new LinearMethod(new DivisionMethod());
             table.FillTable(10000, 0, 100000);
-            Console.WriteLine("Максимальная длина кластера: " + table.GetMaxClaster());
+            Console.WriteLine("Максимальная длина кластера: " + table.GetMaxClaster);
         }
     }
 }

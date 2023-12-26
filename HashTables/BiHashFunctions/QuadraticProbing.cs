@@ -18,12 +18,9 @@ namespace HashTables.BiHashFunctions
 
         public int Hash(int key, int attempt, int capacity)
         {
-            double c1 = 0.61803398875;
-            double c2 = 0.61803398875;
-            double stepHash = (_supportiveFunc.Hash(key, capacity) * c1 * attempt + c2 * attempt * attempt) % capacity;
+            double constant = 0.6180339887;
+            double stepHash = (_supportiveFunc.Hash(key, capacity) + constant * attempt * attempt) % capacity;
             return Math.Abs((int)stepHash);
-            //int hash = (key + attempt * attempt) % capacity;
-            //return hash;
         }
     }
 }

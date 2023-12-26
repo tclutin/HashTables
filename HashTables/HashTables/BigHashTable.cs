@@ -7,11 +7,11 @@ namespace HashTables.HashTable
 {
     public class BigHashTable<V> : IHashTable<int, V>
     {
-        public int capacity = 10000;
-        public Entity<int, V>[] buckets;
+        private int capacity = 10000;
+        private Entity<int, V>[] buckets;
         private readonly double maxFillFactor = 0.8;
         private List<int> _clasters = new List<int>();
-        public int GetMaxClaster() => _clasters.Max();
+        public int GetMaxClaster => _clasters.Max();
         public IBiHashFunction<int> HashFunc { get; set; }
 
         public BigHashTable()
@@ -69,9 +69,9 @@ namespace HashTables.HashTable
 
             while (buckets[hash] is not null)
             {
-                if (buckets[hash]!.Key == key)
+                if (buckets[hash].Key == key)
                 {
-                    return buckets[hash]!.Value;
+                    return buckets[hash].Value;
                 }
                 hash = HashFunc.Hash(key, ++attempt, capacity);
             }
