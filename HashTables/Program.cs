@@ -1,4 +1,6 @@
-﻿using HashTables.HashFunctions;
+﻿using HashTables.BiHashFunctions;
+using HashTables.HashFunctions;
+using HashTables.HashTable;
 using HashTables.HashTables;
 
 namespace HashTables
@@ -49,30 +51,38 @@ namespace HashTables
 
 
             //for ints
-            SmallHashTable<int, string> table = new SmallHashTable<int, string>();
-            table._hash = new MultiplyMethod();
-            table.Add(1, "1");
-            table.Add(2, "2");
-            table.Add(3, "3");
-            table.Add(4, "4");
-            table.Add(5, "5");
+            //SmallHashTable<int, string> table = new SmallHashTable<int, string>();
+            //table._hash = new MultiplyMethod();
+            //table.Add(1, "1");
+            //table.Add(2, "2");
+            //table.Add(3, "3");
+            //table.Add(4, "4");
+            //table.Add(5, "5");
 
-            for (int i = 0; i < 10000; i++)
-            {
-                table.Add(i, "1");
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    table.Add(i, "1");
+            //}
 
-            foreach (var item in table._buckets)
-            {
-                if (item != null)
-                {
-                    foreach (var item1 in item)
-                    {
-                        Console.WriteLine($"{item1.Key} -- {item1.Value}");
-                    }
-                }
-            }
-            Console.WriteLine((int)20 % 1000);
+            //foreach (var item in table._buckets)
+            //{
+            //    if (item != null)
+            //    {
+            //        foreach (var item1 in item)
+            //        {
+            //            Console.WriteLine($"{item1.Key} -- {item1.Value}");
+            //        }
+            //    }
+            //}
+            //Console.WriteLine((int)20 % 1000);
+            ExperimentBigTable();
+        }
+        public static void ExperimentBigTable()
+        {
+            BigHashTable<int> table = new BigHashTable<int>();
+            table.HashFunc = new LinearMethod(new DivisionMethod());
+            table.FillTable(10000, 0, 100000);
+            Console.WriteLine("Максимальная длина кластера: " + table.GetMaxClaster());
         }
     }
 }
