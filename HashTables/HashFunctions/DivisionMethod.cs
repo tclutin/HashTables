@@ -15,7 +15,7 @@ namespace HashTables.HashFunctions
 
         public int Division(int key, int capacity)
         {
-            return Math.Abs(key) % capacity;
+            return Math.Abs(key % capacity);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HashTables.Common;
 using HashTables.HashFunctions;
 using HashTables.Models;
+using System.Collections.Specialized;
 using System.Drawing;
 
 
@@ -34,6 +35,11 @@ namespace HashTables.HashTables
                 return _hash.Hash(key, _capacity);
             }
 
+            if (valueType == typeof(string))
+            {
+                return _hash.Hash(key, _capacity);
+            }
+
             return 0;
         }
 
@@ -63,16 +69,15 @@ namespace HashTables.HashTables
                     if (element.Data.Key.Equals(key))
                     {
                         element.Data.Value = entity.Value;
-                        Console.WriteLine($"Элемент с ключом {key} и хешом {index}обновлен на значение {entity.Value}");
+                        Console.WriteLine($"Элемент с ключом {key} и хешом {index} обновлен на значение {entity.Value}");
                         return;
                     }
                     element = element.Next;
                 }
-                Console.WriteLine($"Произошла коллизия с хешом {index} {entity.Key} - {entity.Value}");
+                Console.WriteLine($"Произошла коллизия с хешом {index} и ключ-значением {entity.Key} - {entity.Value}");
                 current.AddLast(entity);
                 _count++;
             }
-
         }
 
         public V Get(T key)
@@ -116,6 +121,68 @@ namespace HashTables.HashTables
 
             Console.WriteLine($"Элемент с ключом {key} не найден.");
 
+        }
+
+        public double CalculateLoadFactor()
+        {
+            return (double)_count / _capacity;
+        }
+
+
+        public double Fuckingniggers()
+        {
+            int count = 0;
+            foreach (var item in _buckets)
+            {
+                if (item != null)
+                {
+                    count++;
+                }
+            }
+
+            return (double)count / _capacity;
+        }
+
+        public int GetLongChain()
+        {
+            List<int> ints = new List<int>();
+            foreach (var item in _buckets)
+            {
+                if (item != null)
+                {
+                    int count = 0;
+                    var current = item.head;
+                    while (current != null)
+                    {
+                        count++;
+                        current = current.Next;
+                    }
+                    ints.Add(count);
+                }
+               
+            }
+            return ints.Max();
+        }
+
+        public int GetShortChain()
+        {
+            List<int> ints = new List<int>();
+            foreach (var item in _buckets)
+            {
+                if (item != null)
+                {
+                    int count = 0;
+                    var current = item.head;
+                    while (current != null)
+                    {
+                        count++;
+                        current = current.Next;
+                    }
+                    ints.Add(count);
+                }
+
+            }
+            return ints.Min();
         }
     }
 }
