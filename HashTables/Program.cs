@@ -27,7 +27,6 @@ namespace HashTables
 
             double averageLoadFactor = (double)totalLoadFactor / numberOfElements;
             Console.WriteLine($"Средний коэффициент заполнения: {averageLoadFactor}");
-            Console.ReadKey();
 
             Console.WriteLine($"Коэф.заполнения: {table.Fuckingniggers()}");
             Console.WriteLine($"Длиная цепочка: {table.GetLongChain()}");
