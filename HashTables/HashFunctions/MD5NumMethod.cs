@@ -29,7 +29,7 @@ namespace HashTables.HashFunctions
 
                 BigInteger numericHash = BigInteger.Parse(result);
 
-                return Math.Abs((int)(numericHash % capacity));
+                return Math.Abs((int)((numericHash / 2) % capacity));
             }
         }
     }
